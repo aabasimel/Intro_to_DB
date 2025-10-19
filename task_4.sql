@@ -1,5 +1,5 @@
 -- Description: Display full description of the 'Books' table from alx_book_store database without using DESCRIBE or EXPLAIN
-
+USE alx_book_store;
 SELECT 
     COLUMN_NAME,
     COLUMN_TYPE,
