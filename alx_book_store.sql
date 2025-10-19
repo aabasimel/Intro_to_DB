@@ -1,5 +1,4 @@
--- File: alx_book_store.sql
--- Database: alx_book_store
+
 -- Description: Schema for an online bookstore
 
 
@@ -22,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Books (
     price DOUBLE NOT NULL,
     publication_date DATE,
     FOREIGN KEY (author_id) REFERENCES Authors(author_id)
-)
+);
 
 CREATE TABLE IF NOT EXISTS Customers (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
