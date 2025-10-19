@@ -1,7 +1,8 @@
 # File: MySQLServer.py
-# Description: Script to create the database alx_book_store in MySQL using .env for credentials
+# Description: Script to create the database alx_book_store in MySQL using mysql.connector and .env
 
-import pymysql
+import mysql.connector
+from mysql.connector import Error
 from dotenv import load_dotenv
 import os
 
@@ -13,29 +14,25 @@ USER = os.getenv("DB_USER")
 PASSWORD = os.getenv("DB_PASSWORD")
 
 connection = None
-cursor = None
 
 try:
     # Connect to MySQL server
-    connection = pymysql.connect(
+    connection = mysql.connector.connect(
         host=HOST,
         user=USER,
         password=PASSWORD
     )
 
-    cursor = connection.cursor()
+    if connection.is_connected():
+        cursor = connection.cursor()
+        # Create the database if it does not exist
+        cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
+        print("Database 'alx_book_store' created successfully!")
 
-    # SQL query to create the database
-    create_db_query = "CREATE DATABASE IF NOT EXISTS alx_book_store"
-    cursor.execute(create_db_query)
-
-    print("Database 'alx_book_store' created successfully!")
-
-except pymysql.MySQLError as e:
+except Error as e:
     print(f"Error while connecting to MySQL: {e}")
 
 finally:
-    if cursor is not None:
+    if connection is not None and connection.is_connected():
         cursor.close()
-    if connection is not None:
         connection.close()
